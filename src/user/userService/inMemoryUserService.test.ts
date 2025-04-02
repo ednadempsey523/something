@@ -3,10 +3,10 @@ import { InMemoryUserService } from '#modules/memory/inMemoryUserService';
 import { User } from '../user';
 
 describe('InMemoryUserService', () => {
-	const inMemoryUserService = new InMemoryUserService();
+	let inMemoryUserService = new InMemoryUserService();
 
 	function createUserWithDefaults(overrides: Partial<User>): User {
-		const defaultUser: User = {
+		let defaultUser: User = {
 			id: '',
 			email: '',
 			enabled: true,
@@ -50,13 +50,13 @@ describe('InMemoryUserService', () => {
 
 	describe('getUser', () => {
 		it('should retrieve a user by ID', async () => {
-			const user = createUserWithDefaults({
+			let user = createUserWithDefaults({
 				id: '1',
 				email: 'test@example.com',
 				hilBudget: 100,
 			});
 			await inMemoryUserService.createUser(user);
-			const retrievedUser = await inMemoryUserService.getUser('1');
+			let retrievedUser = await inMemoryUserService.getUser('1');
 			expect(retrievedUser).to.deep.equal(user);
 		});
 
@@ -70,7 +70,7 @@ describe('InMemoryUserService', () => {
 
 	describe('updateUser', () => {
 		it('should update user details', async () => {
-			const user: User = {
+			let user: User = {
 				id: '2',
 				email: 'original@example.com',
 				enabled: true,
@@ -92,14 +92,14 @@ describe('InMemoryUserService', () => {
 			};
 			await inMemoryUserService.createUser(user);
 			await inMemoryUserService.updateUser({ email: 'updated@example.com' }, '2');
-			const updatedUser = await inMemoryUserService.getUser('2');
+			let updatedUser = await inMemoryUserService.getUser('2');
 			expect(updatedUser.email).to.equal('updated@example.com');
 		});
 	});
 
 	describe('disableUser', () => {
 		it('should disable a user', async () => {
-			const user: User = {
+			let user: User = {
 				id: '3',
 				email: 'disable@example.com',
 				enabled: true,
@@ -121,14 +121,14 @@ describe('InMemoryUserService', () => {
 			};
 			await inMemoryUserService.createUser(user);
 			await inMemoryUserService.disableUser('3');
-			const disabledUser = await inMemoryUserService.getUser('3');
+			let disabledUser = await inMemoryUserService.getUser('3');
 			expect(disabledUser.enabled).to.be.false;
 		});
 	});
 
 	describe('listUsers', () => {
 		it('should list all users', async () => {
-			const user1: User = {
+			let user1: User = {
 				id: '4',
 				email: 'list1@example.com',
 				enabled: true,
@@ -148,7 +148,7 @@ describe('InMemoryUserService', () => {
 				functionConfig: {},
 				createdAt: new Date(),
 			};
-			const user2: User = {
+			let user2: User = {
 				id: '5',
 				email: 'list2@example.com',
 				enabled: true,
@@ -170,7 +170,7 @@ describe('InMemoryUserService', () => {
 			};
 			await inMemoryUserService.createUser(user1);
 			await inMemoryUserService.createUser(user2);
-			const users = await inMemoryUserService.listUsers();
+			let users = await inMemoryUserService.listUsers();
 			expect(users).to.have.lengthOf(2);
 			expect(users).to.deep.include.members([user1, user2]);
 		});
@@ -196,15 +196,15 @@ describe('InMemoryUserService', () => {
 
 	describe('createUser', () => {
 		it('should create a new user', async () => {
-			const values = {
+			let values = {
 				id: '6',
 				email: 'create@example.com',
 			};
-			const newUser = createUserWithDefaults(values);
-			const createdUser = await inMemoryUserService.createUser(newUser);
+			let newUser = createUserWithDefaults(values);
+			let createdUser = await inMemoryUserService.createUser(newUser);
 			expect(createdUser.id).to.equal(values.id);
 			expect(createdUser.email).to.equal(values.email);
-			const retrievedUser = await inMemoryUserService.getUser('6');
+			let retrievedUser = await inMemoryUserService.getUser('6');
 			expect(retrievedUser.email).to.equal(values.email);
 			expect(retrievedUser.id).to.equal(values.id);
 		});
