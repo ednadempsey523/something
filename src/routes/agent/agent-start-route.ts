@@ -9,9 +9,9 @@ import { logger } from '#o11y/logger';
 import { currentUser } from '#user/userService/userContext';
 import { AppFastifyInstance } from '../../server';
 
-const v1BasePath = '/api/agent/v1';
+let v1BasePath = '/api/agent/v1';
 
-const AGENT_TYPES: Array<AgentType> = ['xml', 'codegen'];
+let AGENT_TYPES: Array<AgentType> = ['xml', 'codegen'];
 
 export async function agentStartRoute(fastify: AppFastifyInstance) {
 	/** Starts a new agent */
@@ -33,14 +33,14 @@ export async function agentStartRoute(fastify: AppFastifyInstance) {
 			},
 		},
 		async (req, reply) => {
-			const { name, userPrompt, functions, type, budget, count, llmEasy, llmMedium, llmHard } = req.body;
+			let { name, userPrompt, functions, type, budget, count, llmEasy, llmMedium, llmHard } = req.body;
 
 			logger.info(req.body, `Starting agent ${name}`);
 
 			logger.info(Object.keys(functionFactory()));
-			const llmFunctions = new LlmFunctions();
-			for (const functionClassName of functions) {
-				const functionClass = functionFactory()[functionClassName];
+			let llmFunctions = new LlmFunctions();
+			for (let functionClassName of functions) {
+				let functionClass = functionFactory()[functionClassName];
 				if (!functionClass) {
 					logger.error(`Function class ${functionClassName} not found in the functionFactory`);
 				} else {
@@ -48,7 +48,7 @@ export async function agentStartRoute(fastify: AppFastifyInstance) {
 				}
 			}
 
-			const agentExecution: AgentExecution = await startAgent({
+			let agentExecution: AgentExecution = await startAgent({
 				user: currentUser(),
 				agentName: name,
 				initialPrompt: userPrompt,
@@ -62,7 +62,7 @@ export async function agentStartRoute(fastify: AppFastifyInstance) {
 				},
 				functions: llmFunctions,
 			});
-			const agentId: string = agentExecution.agentId;
+			let agentId: string = agentExecution.agentId;
 			send(reply, 200, { agentId });
 		},
 	);
