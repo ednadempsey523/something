@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 // Updated at: 20210425 - 1792 icons
-export const material = [
+export let material = [
     '10k',
     '10mp',
     '11mp',
@@ -1795,7 +1795,7 @@ export const material = [
     'zoom_out',
     'zoom_out_map',
 ];
-export const feather = [
+export let feather = [
     'activity',
     'airplay',
     'alert-circle',
@@ -2080,7 +2080,7 @@ export const feather = [
     'zoom-out',
 ];
 // heroicons v2.0.18 - 292 icons
-export const heroicons = [
+export let heroicons = [
     'academic-cap',
     'archive-box-arrow-down',
     'adjustments-vertical',
